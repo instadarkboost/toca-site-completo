@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- TÍTULO ATUALIZADO -->
+  <title>Toca - Marketplace C2C Seguro para Ingressos</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { /* ... seu config tailwind ... */ }
+  </script>
+  <style>
+    /* --- SEU CSS CUSTOMIZADO PERMANECE O MESMO --- */
+    /* (Incluindo as variáveis, animações, glassmorphism, etc.) */
+     :root {
+      --bg-primary: #0f0f0f;
+      --bg-secondary: #181818;
+      --bg-elements: #222222;
+      --bg-elements-hover: #313131;
+      --text-primary: #f5f5f5;
+      --text-secondary: #a0a0a0;
+      --accent-color: #8B5CF6; /* tailwind primary */
+      --accent-color-hover: #7C3AED; /* tailwind secondary */
+      --glow-accent: rgba(139, 92, 246, 0.6);
+      --gradient-1: #8B5CF6;
+      --gradient-2: #7C3AED;
+      --gradient-3: #6D28D9;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --modal-overlay: rgba(0, 0, 0, 0.8);
+      --shadow-color-light: rgba(0,0,0,0.3);
+      --shadow-color-medium: rgba(0,0,0,0.5);
+      --shadow-color-heavy: rgba(0,0,0,0.7);
+      --card-border-hover: var(--accent-color);
+      --input-placeholder: rgba(245, 245, 245, 0.6);
+      --link-color: var(--accent-color);
+      --carousel-btn-bg: rgba(40, 40, 40, 0.8);
+      --bg-elements-rgb: 36, 36, 36;
+      --text-shadow-color: rgba(0, 0, 0, 0.4); /* Sombra para texto (dark theme) */
+    }
+
+    body.light-theme {
+      --bg-primary: #F8FAFC;
+      --bg-secondary: #FFFFFF;
+      --bg-elements: #FFFFFF;
+      --bg-elements-hover: #F1F5F9;
+      --text-primary: #0F172A;
+      --text-secondary: #64748B;
+      --glow-accent: rgba(139, 92, 246, 0.2);
+      --border-color: #E2E8F0;
+      --modal-overlay: rgba(0, 0, 0, 0.5);
+      --shadow-color-light: rgba(0,0,0,0.05);
+      --shadow-color-medium: rgba(0,0,0,0.1);
+      --shadow-color-heavy: rgba(40, 40, 90, 0.15);
+      --card-border-hover: var(--accent-color);
+      --input-placeholder: rgba(100, 116, 139, 0.7);
+      --link-color: var(--accent-color);
+      --carousel-btn-bg: rgba(255, 255, 255, 0.9);
+      --bg-elements-rgb: 255, 255, 255;
+      --text-shadow-color: rgba(0, 0, 0, 0.1); /* Sombra para texto (light theme) */
+    }
+     /* Base Body Styles */
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); } /* Aumentei um pouco */
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.2; }
+      50% { transform: scale(1.1); opacity: 0.3; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(30px); opacity: 0; } /* Aumentei o translateY */
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-color-hover); }
+
+    /* Glassmorphism Effect */
+    .glass {
+      background: rgba(var(--bg-elements-rgb), 0.7);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+    }
+    body.light-theme .glass { border-bottom: 1px solid var(--border-color); }
+
+    /* Gradient Text */
+    .gradient-text {
+      background: linear-gradient(90deg, var(--gradient-1), var(--gradient-2), var(--gradient-3));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    /* Card Hover Effect */
+    .card-hover {
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1);
+    }
+    .card-hover:hover {
+      transform: perspective(1000px) rotateX(2deg) rotateY(3deg) scale(1.04);
+      box-shadow: 0 25px 55px var(--shadow-color-heavy);
+    }
+
+    /* Button Hover Effect */
+    .btn-hover { transition: all 0.3s ease; transform: translateY(0); }
+    .btn-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--glow-accent); }
+
+    /* Input Focus Effect */
+    input:focus, select:focus {
+        outline: none; box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.4);
+        border-color: var(--accent-color) !important; /* Ensure border changes */
+    }
+    /* Placeholder style */
+    ::placeholder { color: var(--input-placeholder); opacity: 1; }
+
+    /* Section Animation (for scroll triggering) */
+    .section-animate { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .section-animate.visible { animation: slideIn 0.7s ease-out forwards; }
+
+    /* Floating Elements */
+    .float-animate { animation: float 6s ease-in-out infinite; }
+    .pulse-animate { animation: pulse 5s ease-in-out infinite alternate; }
+
+    /* Hero Section Specifics */
+    .hero-bg {
+      background: linear-gradient(135deg, var(--gradient-1), var(--gradient-2), var(--gradient-3), var(--bg-primary));
+      background-size: 300% 300%; animation: backgroundGradient 15s ease infinite;
+    }
+    .hero-bg h1 { text-shadow: 0 2px 5px var(--text-shadow-color); }
+
+    @keyframes backgroundGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+    /* Ticket Styling (Can be repurposed for 'How it Works' cards) */
+    .info-card { /* Renamed from ticket-card */
+      position: relative; overflow: hidden; border-radius: 12px;
+      background-color: var(--bg-elements);
+      border-left: 4px solid var(--accent-color); /* Keep accent border */
+    }
+     /* Link hover transitions */
+    nav a, footer a { transition: color 0.3s ease; }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .hero-bg { background-position: center; }
+      h1 { font-size: 2.5rem; /* Tailwind text-4xl */ }
+      h2 { font-size: 2rem; /* Tailwind text-3xl */ }
+    }
+
+    /* Input/Select Styling */
+    input, select {
+        background-color: var(--bg-elements); color: var(--text-primary);
+        border: 1px solid var(--border-color); transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+     body.light-theme input, body.light-theme select {
+         background-color: var(--bg-secondary); border: 1px solid var(--border-color);
+     }
+  </style>
+</head>
+<body class="bg-primary text-primary font-sans antialiased">
+
+  <!-- Floating Elements (Mantidos) -->
+  <div class="fixed top-20 left-10 w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 opacity-20 float-animate pulse-animate hidden md:block" style="animation-delay: 0.5s;"></div>
+  <div class="fixed bottom-1/4 right-20 w-24 h-24 rounded-full bg-gradient-to-br from-purple-400 to-blue-400 opacity-20 float-animate pulse-animate hidden md:block" style="animation-delay: 2.5s;"></div>
+  <div class="fixed top-1/3 right-1/4 w-20 h-20 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 opacity-20 float-animate pulse-animate hidden md:block" style="animation-delay: 4.5s;"></div>
+
+  <!-- Header (Estrutura Mantida, links podem precisar de revisão se as seções mudarem muito) -->
+  <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 glass">
+    <div class="container mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <a href="#home" class="text-3xl font-bold gradient-text">TOCA</a>
+        </div>
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#home" class="text-primary hover:text-accent font-medium flex items-center space-x-2"><i class="fas fa-home"></i><span>Início</span></a>
+          <a href="#events" class="text-primary hover:text-accent font-medium flex items-center space-x-2"><i class="fas fa-calendar-alt"></i><span>Eventos</span></a>
+          <!-- LINK ATUALIZADO -->
+          <a href="#how-it-works" class="text-primary hover:text-accent font-medium flex items-center space-x-2"><i class="fas fa-shield-alt"></i><span>Como Funciona</span></a>
+          <a href="#about" class="text-primary hover:text-accent font-medium flex items-center space-x-2"><i class="fas fa-info-circle"></i><span>Sobre</span></a>
+        </nav>
+        <div class="flex items-center space-x-4">
+          <button id="theme-toggle" class="p-2 rounded-full hover:bg-elements-hover transition-colors duration-300" aria-label="Alternar tema"><i class="fas fa-moon text-primary text-lg"></i></button>
+          <!-- BOTÃO ATUALIZADO -->
+          <button class="bg-accent hover:bg-accent-hover text-white px-4 py-2 rounded-full btn-hover font-medium"><i class="fas fa-sign-in-alt mr-2"></i>Entrar / Cadastrar</button>
+          <button class="md:hidden text-primary hover:text-accent p-2" id="mobile-menu-button" aria-label="Abrir menu"><i class="fas fa-bars text-xl"></i></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu (Estrutura Mantida, link atualizado) -->
+  <div id="mobile-menu" class="fixed inset-0 bg-modal-overlay z-40 hidden transition-opacity duration-300 opacity-0">
+      <div class="absolute top-0 right-0 w-3/4 max-w-sm h-full bg-elements shadow-lg transform transition-transform duration-300 translate-x-full">
+          <div class="p-6">
+              <div class="flex justify-between items-center mb-8">
+                  <a href="#home" class="text-2xl font-bold gradient-text">TOCA</a>
+                  <button id="close-mobile-menu" class="text-primary hover:text-accent p-2" aria-label="Fechar menu"><i class="fas fa-times text-2xl"></i></button>
+              </div>
+              <nav class="flex flex-col space-y-6">
+                  <a href="#home" class="text-primary hover:text-accent font-medium flex items-center space-x-4 text-lg mobile-menu-link"><i class="fas fa-home w-6 text-center text-accent"></i><span>Início</span></a>
+                  <a href="#events" class="text-primary hover:text-accent font-medium flex items-center space-x-4 text-lg mobile-menu-link"><i class="fas fa-calendar-alt w-6 text-center text-accent"></i><span>Eventos</span></a>
+                  <!-- LINK ATUALIZADO -->
+                  <a href="#how-it-works" class="text-primary hover:text-accent font-medium flex items-center space-x-4 text-lg mobile-menu-link"><i class="fas fa-shield-alt w-6 text-center text-accent"></i><span>Como Funciona</span></a>
+                  <a href="#about" class="text-primary hover:text-accent font-medium flex items-center space-x-4 text-lg mobile-menu-link"><i class="fas fa-info-circle w-6 text-center text-accent"></i><span>Sobre</span></a>
+                  <div class="pt-6 border-t border-border-color mt-4">
+                       <!-- BOTÃO ATUALIZADO -->
+                      <button class="bg-accent hover:bg-accent-hover text-white w-full py-3 rounded-full btn-hover font-medium text-lg"><i class="fas fa-sign-in-alt mr-2"></i>Entrar / Cadastrar</button>
+                  </div>
+              </nav>
+          </div>
+      </div>
+  </div>
+
+  <!-- Hero Section (Conteúdo Totalmente Revisado) -->
+  <section id="home" class="hero-bg min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center gap-12">
+        <div class="md:w-1/2 text-center md:text-left section-animate visible">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight text-white">
+            <span class="gradient-text">Compre e Venda</span> Ingressos Entre Fãs com Segurança Total
+          </h1>
+          <p class="text-lg md:text-xl text-secondary mb-8 max-w-lg mx-auto md:mx-0">
+            A TOCA é o marketplace C2C que conecta fãs. Compre aquele ingresso esgotado ou venda o seu com <span class="font-semibold text-primary">segurança e transparência</span>, garantidas por contratos inteligentes.
+          </p>
+          <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
+            <!-- CTAs ATUALIZADOS -->
+            <a href="#events" class="bg-accent hover:bg-accent-hover text-white px-8 py-3 rounded-full btn-hover font-medium text-center text-lg">
+              <i class="fas fa-search mr-2"></i>Buscar Ingressos
+            </a>
+            <a href="#how-it-works" class="bg-transparent border-2 border-accent text-accent hover:bg-accent hover:text-white px-8 py-3 rounded-full btn-hover font-medium text-center transition duration-300 text-lg">
+             <i class="fas fa-tag mr-2"></i> Vender Meu Ingresso
+            </a>
+          </div>
+        </div>
+        <div class="md:w-1/2 flex justify-center section-animate visible" style="animation-delay: 0.2s;">
+          <div class="relative w-full max-w-md">
+            <!-- Imagem representativa de troca/segurança ou evento -->
+            <img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                 alt="Fãs se divertindo em um evento, representando a comunidade C2C"
+                 class="rounded-2xl shadow-2xl w-full h-auto object-cover relative z-10 card-hover" loading="eager">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Events Section (Texto ajustado, CTA do card atualizado) -->
+  <section id="events" class="py-20 bg-secondary section-animate">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Eventos Populares</h2>
+        <p class="text-secondary max-w-2xl mx-auto text-lg">
+          Explore os eventos mais quentes e encontre <span class="font-semibold text-primary">ingressos listados por outros fãs</span> como você. A oportunidade que você esperava pode estar aqui!
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Event Card 1 (Exemplo) -->
+        <div class="bg-elements rounded-xl overflow-hidden shadow-lg card-hover">
+          <div class="relative">
+            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Festival Sunset" class="w-full h-52 object-cover" loading="lazy">
+            <div class="absolute top-4 left-4 bg-accent text-white px-3 py-1 rounded-full text-sm font-medium shadow-md"><i class="fas fa-music mr-1"></i> Música</div>
+             <div class="absolute bottom-4 right-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-md"> A partir de R$ 150 (C2C)</div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Festival Sunset</h3>
+            <p class="text-secondary mb-4 text-sm h-16 overflow-hidden">O maior festival de música eletrônica do verão. Ingressos esgotados? Confira as ofertas de fãs!</p>
+            <div class="flex items-center text-secondary mb-3 text-sm"><i class="fas fa-calendar-day mr-2 w-4 text-center"></i><span>15 Dez 2023</span></div>
+            <div class="flex items-center text-secondary text-sm"><i class="fas fa-map-marker-alt mr-2 w-4 text-center"></i><span>Parque da Cidade, São Paulo</span></div>
+            <!-- CTA DO CARD ATUALIZADO -->
+            <button class="w-full mt-6 bg-accent hover:bg-accent-hover text-white py-2.5 rounded-full btn-hover font-medium transition duration-300">
+             <i class="fas fa-ticket-alt mr-2"></i> Ver Ingressos C2C
+            </button>
+          </div>
+        </div>
+        <!-- Event Card 2 (Exemplo) -->
+        <div class="bg-elements rounded-xl overflow-hidden shadow-lg card-hover">
+           <div class="relative">
+            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Romeu e Julieta" class="w-full h-52 object-cover" loading="lazy">
+             <div class="absolute top-4 left-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-md"><i class="fas fa-theater-masks mr-1"></i> Teatro</div>
+             <div class="absolute bottom-4 right-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-md"> A partir de R$ 90 (C2C)</div>
+          </div>
+           <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Romeu e Julieta - Releitura</h3>
+             <p class="text-secondary mb-4 text-sm h-16 overflow-hidden">A clássica história de amor em produção contemporânea. Encontre ingressos de fãs para as melhores datas.</p>
+            <div class="flex items-center text-secondary mb-3 text-sm"><i class="fas fa-calendar-day mr-2 w-4 text-center"></i><span>22 Nov 2023</span></div>
+            <div class="flex items-center text-secondary text-sm"><i class="fas fa-map-marker-alt mr-2 w-4 text-center"></i><span>Teatro Municipal, Rio de Janeiro</span></div>
+             <button class="w-full mt-6 bg-accent hover:bg-accent-hover text-white py-2.5 rounded-full btn-hover font-medium transition duration-300">
+              <i class="fas fa-ticket-alt mr-2"></i> Ver Ingressos C2C
+            </button>
+          </div>
+        </div>
+        <!-- Event Card 3 (Exemplo) -->
+        <div class="bg-elements rounded-xl overflow-hidden shadow-lg card-hover">
+           <div class="relative">
+             <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Show Rock Legends" class="w-full h-52 object-cover" loading="lazy">
+             <div class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-md"><i class="fas fa-guitar mr-1"></i> Rock</div>
+              <div class="absolute bottom-4 right-4 bg-black bg-opacity-60 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-md"> A partir de R$ 200 (C2C)</div>
+          </div>
+           <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Rock Legends Live</h3>
+            <p class="text-secondary mb-4 text-sm h-16 overflow-hidden">Uma noite inesquecível com tributos às lendas do rock. Garanta seu lugar comprando de outro fã!</p>
+            <div class="flex items-center text-secondary mb-3 text-sm"><i class="fas fa-calendar-day mr-2 w-4 text-center"></i><span>10 Jan 2024</span></div>
+            <div class="flex items-center text-secondary text-sm"><i class="fas fa-map-marker-alt mr-2 w-4 text-center"></i><span>Arena Rock Hall, Curitiba</span></div>
+            <button class="w-full mt-6 bg-accent hover:bg-accent-hover text-white py-2.5 rounded-full btn-hover font-medium transition duration-300">
+              <i class="fas fa-ticket-alt mr-2"></i> Ver Ingressos C2C
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-12">
+        <a href="#" class="inline-block border-2 border-accent text-accent hover:bg-accent hover:text-white px-8 py-3 rounded-full btn-hover font-medium transition duration-300 text-lg">
+          Ver Todos os Eventos
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section (Substitui a antiga seção de Tickets) -->
+  <section id="how-it-works" class="py-20 bg-primary section-animate">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Compre e Venda Ingressos com <span class="gradient-text">Segurança C2C</span></h2>
+        <p class="text-secondary max-w-3xl mx-auto text-lg">
+          Nossa plataforma utiliza <span class="font-semibold text-primary">contratos inteligentes</span> para garantir que cada transação entre fãs seja segura, transparente e livre de fraudes. Veja como é fácil:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Card 1: Para Compradores -->
+        <div class="bg-elements rounded-xl shadow-lg p-8 text-center card-hover info-card">
+          <div class="mb-6">
+            <i class="fas fa-shield-alt text-5xl text-accent"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">1. Compre com Confiança</h3>
+          <p class="text-secondary mb-6">
+            Encontre o ingresso desejado, mesmo os esgotados. Pague com segurança através da plataforma. Seu dinheiro fica protegido pelo contrato inteligente até a confirmação.
+          </p>
+          <span class="inline-block bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">Garantia Anti-Fraude</span>
+        </div>
+
+        <!-- Card 2: Para Vendedores -->
+        <div class="bg-elements rounded-xl shadow-lg p-8 text-center card-hover info-card" style="animation-delay: 0.1s;">
+          <div class="mb-6">
+            <i class="fas fa-tags text-5xl text-accent"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">2. Venda Sem Complicação</h3>
+          <p class="text-secondary mb-6">
+            Não pode mais ir ao evento? Liste seu ingresso facilmente, defina seu preço (respeitando limites justos). O contrato inteligente garante o recebimento após o evento.
+          </p>
+           <span class="inline-block bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full">Pagamento Garantido</span>
+        </div>
+
+        <!-- Card 3: Smart Contract -->
+        <div class="bg-elements rounded-xl shadow-lg p-8 text-center card-hover info-card" style="animation-delay: 0.2s;">
+          <div class="mb-6">
+            <i class="fas fa-file-contract text-5xl text-accent"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">3. A Mágica do Contrato Inteligente</h3>
+          <p class="text-secondary mb-6">
+            Tecnologia blockchain que automatiza a transação. O pagamento é liberado ao vendedor <span class="font-semibold text-primary">somente após</span> a confirmação do evento/validade, e o comprador recebe o ingresso digitalmente.
+          </p>
+           <span class="inline-block bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full">Transparência Blockchain</span>
+        </div>
+      </div>
+       <div class="text-center mt-12">
+        <a href="#" class="bg-accent hover:bg-accent-hover text-white px-8 py-3 rounded-full btn-hover font-medium text-center text-lg">
+          <i class="fas fa-plus-circle mr-2"></i>Comece Agora (Crie sua Conta)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section (Conteúdo Ajustado para C2C) -->
+  <section id="testimonials" class="py-20 bg-secondary section-animate">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">O Que Nossos <span class="gradient-text">Usuários</span> Dizem</h2>
+        <p class="text-secondary max-w-2xl mx-auto text-lg">
+          Veja a experiência de quem já usou a TOCA para comprar e vender ingressos com segurança.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Testimonial 1 (Vendedor) -->
+        <div class="bg-elements p-8 rounded-xl shadow-lg card-hover">
+           <div class="flex items-center mb-4">
+             <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Foto de Ana Silva" class="w-14 h-14 rounded-full border-2 border-accent object-cover">
+            <div class="ml-4">
+              <h4 class="font-bold text-lg">Ana Silva <span class="text-xs text-secondary ml-1">(Vendedora)</span></h4>
+              <div class="flex text-yellow-400 mt-1"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            </div>
+          </div>
+          <p class="text-secondary italic">
+            "Precisei vender meu ingresso extra do festival Sunset de última hora. Anunciei na TOCA e vendeu rápido! O sistema do contrato inteligente me deixou <span class="font-semibold text-primary">super segura</span> e recebi o dinheiro certinho depois do evento. Recomendo!"
+          </p>
+        </div>
+        <!-- Testimonial 2 (Comprador) -->
+        <div class="bg-elements p-8 rounded-xl shadow-lg card-hover" style="animation-delay: 0.1s;">
+           <div class="flex items-center mb-4">
+             <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Foto de Carlos Oliveira" class="w-14 h-14 rounded-full border-2 border-accent object-cover">
+            <div class="ml-4">
+              <h4 class="font-bold text-lg">Carlos Oliveira <span class="text-xs text-secondary ml-1">(Comprador)</span></h4>
+              <div class="flex text-yellow-400 mt-1"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+            </div>
+          </div>
+          <p class="text-secondary italic">
+            "Estava LOUCO atrás de um ingresso pro show da banda X que esgotou em minutos. Achei na TOCA por um preço justo, comprei de outro fã e o processo foi <span class="font-semibold text-primary">100% transparente</span>. A segurança do contrato foi essencial!"
+          </p>
+        </div>
+        <!-- Testimonial 3 (Usuário Geral) -->
+        <div class="bg-elements p-8 rounded-xl shadow-lg card-hover" style="animation-delay: 0.2s;">
+          <div class="flex items-center mb-4">
+             <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Foto de Juliana Santos" class="w-14 h-14 rounded-full border-2 border-accent object-cover">
+            <div class="ml-4">
+              <h4 class="font-bold text-lg">Juliana Santos <span class="text-xs text-secondary ml-1">(Usuária)</span></h4>
+              <div class="flex text-yellow-400 mt-1"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            </div>
+          </div>
+          <p class="text-secondary italic">
+            "Finalmente uma plataforma C2C que <span class="font-semibold text-primary">realmente se preocupa com a segurança</span>! Usei a TOCA para comprar e vender. É a melhor forma de evitar golpes e cambistas. O sistema de contrato é genial e funciona!"
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section (Ajustado para C2C) -->
+  <section class="py-20 bg-gradient-to-r from-purple-800 via-purple-700 to-indigo-800 section-animate">
+    <div class="container mx-auto px-6">
+      <div class="max-w-3xl mx-auto text-center">
+        <i class="fas fa-bell text-5xl text-white opacity-80 mb-6"></i>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Seja o Primeiro a Saber!</h2>
+        <p class="text-purple-200 mb-8 text-lg">
+          Cadastre-se e receba <span class="font-semibold">alertas de ingressos C2C</span> para seus eventos favoritos, além de novidades sobre nossa plataforma segura e promoções exclusivas.
+        </p>
+        <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+          <label for="newsletter-email" class="sr-only">Seu melhor email</label>
+          <input id="newsletter-email" type="email" placeholder="Seu melhor email" required class="flex-grow px-5 py-3 rounded-full text-primary placeholder-gray-500 bg-white focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50 input-focus border-transparent">
+          <button type="submit" class="bg-accent hover:bg-accent-hover text-white px-8 py-3 rounded-full btn-hover font-medium whitespace-nowrap transition duration-300 text-lg">
+            Receber Alertas
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section (Totalmente Revisado para C2C e Segurança) -->
+  <section id="about" class="py-20 bg-primary section-animate">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center gap-12">
+        <div class="md:w-1/2 text-center md:text-left">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6">Sobre a <span class="gradient-text">TOCA</span>: Revolucionando o C2C</h2>
+          <p class="text-secondary mb-6 text-lg leading-relaxed">
+            A TOCA nasceu para resolver um problema real: a <span class="font-semibold text-primary">insegurança e a falta de transparência</span> na compra e venda de ingressos entre fãs (C2C). Chega de golpes, preços abusivos de cambistas e da incerteza de não saber se seu ingresso é válido.
+          </p>
+          <p class="text-secondary mb-8 text-lg leading-relaxed">
+            Nossa missão é criar um <span class="font-semibold text-primary">marketplace justo, transparente e 100% seguro</span>, onde a paixão por eventos conecta pessoas. Utilizamos <span class="font-semibold text-primary">contratos inteligentes (smart contracts)</span> em blockchain para automatizar e proteger cada transação, garantindo tranquilidade para compradores e vendedores.
+          </p>
+          <!-- STATS ATUALIZADOS -->
+          <div class="grid grid-cols-2 gap-6 max-w-md mx-auto md:mx-0">
+            <div class="bg-elements p-5 rounded-lg text-center shadow-md">
+              <div class="text-4xl font-bold text-accent mb-2"><i class="fas fa-exchange-alt"></i></div>
+              <div class="text-secondary">Milhares de Trocas Seguras</div>
+            </div>
+            <div class="bg-elements p-5 rounded-lg text-center shadow-md">
+              <div class="text-4xl font-bold text-accent mb-2"><i class="fas fa-users"></i></div>
+              <div class="text-secondary">Comunidade C2C Verificada</div>
+            </div>
+            <div class="bg-elements p-5 rounded-lg text-center shadow-md">
+               <div class="text-4xl font-bold text-accent mb-2"><i class="fas fa-lock"></i></div>
+              <div class="text-secondary">Sistema Anti-Fraude Ativo</div>
+            </div>
+            <div class="bg-elements p-5 rounded-lg text-center shadow-md">
+               <div class="text-4xl font-bold text-accent mb-2"><i class="fas fa-cube"></i></div>
+              <div class="text-secondary">Tecnologia Smart Contract</div>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-1/2 flex justify-center mt-10 md:mt-0">
+          <div class="relative w-full max-w-lg">
+            <!-- Imagem pode ser mais tecnológica/abstrata ou de comunidade -->
+            <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80"
+                 alt="Ilustração abstrata de rede blockchain ou conexão segura"
+                 class="rounded-2xl shadow-2xl w-full h-auto object-cover relative z-10 card-hover" loading="lazy">
+            <div class="absolute -bottom-6 -right-6 w-32 h-32 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 opacity-20 float-animate pulse-animate hidden md:block" style="animation-delay: 1s;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (Descrição e links ajustados) -->
+  <footer class="bg-dark text-gray-300 py-16">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div>
+          <a href="#home" class="text-3xl font-bold gradient-text mb-4 inline-block">TOCA</a>
+          <p class="text-gray-400 mb-6 text-sm leading-relaxed">
+            <!-- DESCRIÇÃO ATUALIZADA -->
+            O marketplace C2C seguro para comprar e vender ingressos de eventos. Conectando fãs com tecnologia blockchain e smart contracts.
+          </p>
+          <div class="flex space-x-5">
+            <a href="#" class="text-gray-400 hover:text-white text-xl transition-colors duration-300" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white text-xl transition-colors duration-300" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white text-xl transition-colors duration-300" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-gray-400 hover:text-white text-xl transition-colors duration-300" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-5">Navegue</h3>
+          <ul class="space-y-3">
+            <li><a href="#events" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs text-accent"></i>Buscar Ingressos</a></li>
+            <li><a href="#how-it-works" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs text-accent"></i>Como Vender</a></li>
+            <li><a href="#how-it-works" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs text-accent"></i>Como Comprar</a></li>
+            <li><a href="#about" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs text-accent"></i>Sobre a TOCA</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs text-accent"></i>Blog</a></li>
+          </ul>
+        </div>
+        <div>
+           <h3 class="text-lg font-semibold text-white mb-5">Ajuda e Segurança</h3>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs text-accent"></i>Central de Ajuda (FAQ)</a></li>
+             <!-- LINK RELEVANTE -->
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs text-accent"></i>Garantia TOCA (Smart Contract)</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs text-accent"></i>Política de Disputas</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs text-accent"></i>Termos de Uso C2C</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300 flex items-center"><i class="fas fa-chevron-right mr-2 text-xs text-accent"></i>Política de Privacidade</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-white mb-5">Entre em Contato</h3>
+          <ul class="space-y-3 text-gray-400">
+            <li class="flex items-start"><i class="fas fa-map-marker-alt mr-3 mt-1 text-accent"></i><span>Sede Digital - Brasil</span></li>
+            <li class="flex items-center"><i class="fas fa-envelope mr-3 text-accent"></i><a href="mailto:suporte@toca.com.br" class="hover:text-white transition-colors duration-300">suporte@toca.com.br</a></li>
+             <li class="flex items-center"><i class="fas fa-headset mr-3 text-accent"></i><span>Suporte via Chat (Login)</span></li>
+             <li class="flex items-center"><i class="fas fa-clock mr-3 text-accent"></i><span>Suporte: Seg-Sex 9h-18h</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm">
+        <p>© <span id="current-year"></span> TOCA Marketplace C2C. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button (Mantido) -->
+  <button id="back-to-top" class="fixed bottom-6 right-6 bg-accent hover:bg-accent-hover text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 invisible transform scale-90" aria-label="Voltar ao topo">
+    <i class="fas fa-arrow-up text-lg"></i>
+  </button>
+
+  <!-- JavaScript (O mesmo JS anterior deve funcionar, pois a estrutura e IDs foram mantidos) -->
+  <script>
+    // --- SEU JAVASCRIPT ANTERIOR PERMANECE O MESMO ---
+    // (Incluindo Theme Toggle, Mobile Menu, Back to Top, Smooth Scroll, Animation on Scroll, Modal Logic - o modal de compra agora seria acionado pelos botões 'Ver Ingressos C2C')
+
+    // Theme Toggle Logic...
+    // Mobile Menu Logic...
+    // Back to Top Logic...
+    // Smooth Scroll Logic...
+    // Animation on Scroll Logic (Intersection Observer)...
+    // Modal Logic (pode precisar de leves ajustes no conteúdo se o botão que o dispara mudar)...
+    // Current Year Logic...
+
+    // Exemplo: Se o botão 'Ver Ingressos C2C' deve abrir um modal de compra/oferta:
+    document.querySelectorAll('.card-hover button').forEach(button => {
+        // A lógica de adicionar o event listener para abrir o modal permanece a mesma.
+        // O conteúdo do modal pode ser adaptado para mostrar ofertas C2C ou detalhes da compra.
+         button.addEventListener('click', function() {
+            const card = this.closest('.card-hover');
+            if (!card) return;
+
+            const eventName = card.querySelector('h3')?.textContent || 'Evento';
+            const startingPrice = card.querySelector('.bg-opacity-60')?.textContent || 'Preço a consultar'; // Pega o preço C2C
+
+            // ---- Lógica para criar e mostrar o MODAL ----
+            // (O conteúdo interno do modal pode ser diferente, mostrando talvez
+            // uma lista de ingressos daquele evento listados por usuários, ou
+            // direcionando para uma página específica do evento com as listagens C2C)
+
+            // Exemplo simples de modal informativo:
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-modal-overlay z-[60] flex items-center justify-center p-4 transition-opacity duration-300 opacity-0';
+            modal.innerHTML = `
+              <div class="bg-elements rounded-xl max-w-md w-full p-6 md:p-8 relative shadow-xl transform scale-95 transition-all duration-300">
+                <button class="absolute top-3 right-3 text-secondary hover:text-primary p-2 close-modal-btn" aria-label="Fechar modal">
+                  <i class="fas fa-times text-xl"></i>
+                </button>
+                <h3 class="text-2xl font-bold mb-4 text-primary">${eventName}</h3>
+                <p class="text-secondary mb-6">Ingressos para este evento estão sendo vendidos por outros fãs a partir de <span class="font-semibold text-primary">${startingPrice.replace('A partir de ','').replace(' (C2C)','')}</span>.</p>
+                <p class="text-secondary mb-6 text-sm">Para ver as ofertas disponíveis e comprar com segurança via Smart Contract, clique abaixo.</p>
+                <a href="#" class="w-full block text-center bg-accent hover:bg-accent-hover text-white py-3 rounded-full btn-hover font-medium transition duration-300">
+                  Ver Ofertas C2C Agora
+                </a>
+              </div>
+            `;
+
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+
+            setTimeout(() => {
+              modal.classList.remove('opacity-0');
+              modal.querySelector('div > div').classList.remove('scale-95');
+            }, 50);
+
+            const closeModal = () => {
+                modal.classList.add('opacity-0');
+                modal.querySelector('div > div').classList.add('scale-95');
+                setTimeout(() => {
+                    modal.remove();
+                    document.body.style.overflow = '';
+                }, 300);
+            };
+
+            modal.querySelector('.close-modal-btn').addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        });
+    });
+
+     // Set current year in footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+     // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const themeIcon = themeToggle.querySelector('i');
+
+    const applyTheme = (theme) => {
+      if (theme === 'light') {
+        body.classList.add('light-theme');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.classList.remove('light-theme');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'dark');
+      }
+    };
+
+    const savedTheme = localStorage.getItem('theme');
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+
+    if (savedTheme) {
+      applyTheme(savedTheme);
+    } else {
+      applyTheme(prefersLight ? 'light' : 'dark');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = body.classList.contains('light-theme') ? 'light' : 'dark';
+      applyTheme(currentTheme === 'light' ? 'dark' : 'light');
+    });
+
+    // Mobile Menu Toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuContent = mobileMenu.querySelector('div');
+    const closeMobileMenu = document.getElementById('close-mobile-menu');
+    const mobileMenuLinks = mobileMenu.querySelectorAll('.mobile-menu-link');
+
+    const openMenu = () => { /* ... */ };
+    const closeMenu = () => { /* ... */ };
+
+    mobileMenuButton.addEventListener('click', openMenu);
+    closeMobileMenu.addEventListener('click', closeMenu);
+    mobileMenu.addEventListener('click', (e) => { if (e.target === mobileMenu) closeMenu(); });
+    mobileMenuLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+
+    // Back to Top Button
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => { /* ... */ });
+    backToTopButton.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Smooth Scrolling for Anchor Links
+     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            e.preventDefault();
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+                const headerOffset = document.getElementById('main-header')?.offsetHeight || 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                if (!mobileMenu.classList.contains('hidden')) closeMenu();
+            }
+        });
+    });
+
+
+    // Animation on Scroll (Intersection Observer)
+    const animatedSections = document.querySelectorAll('.section-animate');
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // observer.unobserve(entry.target); // Optional
+            }
+        });
+    };
+    const sectionObserver = new IntersectionObserver(observerCallback, observerOptions);
+    animatedSections.forEach(section => {
+        if (!section.classList.contains('visible')) sectionObserver.observe(section);
+    });
+
+  </script>
+</body>
+</html>
